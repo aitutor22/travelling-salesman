@@ -44,8 +44,9 @@ angular.module('tspApp')
     };
 
     $scope.findShortestPath = function() {
-      $http.post('/api/cities', $scope.data.cities).then(function(data) {
-        console.log(data)
+      $http.post('/api/cities', $scope.data.cities).then(function(response) {
+        $scope.data.moves = response.data.moves;
+        console.log($scope.data.moves)
       });
     };
   }]);

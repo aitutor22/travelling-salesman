@@ -16,7 +16,7 @@ angular.module('tspApp')
           xPos,
           yPos;
 
-        R.image('/images/tsp-map.jpg', 0, 0, '100%', '100%')
+        R.image('http://static.planetminecraft.com/files/resource_media/screenshot/1232/WorldMap-World_3162678.jpg', 0, 0, '100%', '100%')
 
         for (var i = 0; i < scope.cities.length; i++) {
           xPos = scope.cities[i].xPos;

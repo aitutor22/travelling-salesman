@@ -159,18 +159,19 @@ describe('swapPMX function', function() {
   })  
 });
 
-// describe('mutate function', function() {
-//   beforeEach(function() {
-//     genome = new Genome(10);
-//   });
+describe('mutate function', function() {
+  beforeEach(function() {
+    genome = new Genome(10);
+  });
 
-//   it('after mutation, genome\'s genes should be different from original', function() {
-//     var originalGenes = genome.genes.slice();
-//     genome.mutate();
-//     _.isEqual(genome.genes, originalGenes).should.be.false;
-//   });
+  it('after mutation, genome\'s genes should be different from original', function() {
+    var originalGenes = genome.genes.slice();
+    genome.mutate();
+    _.isEqual(genome.genes, originalGenes).should.be.false;
+  });
 
-//   it('after mutation, the genome\'s genes should still be be valid', function() {
-
-//   });
-// });
+  it('after mutation, the genome\'s genes should still be be valid', function() {
+    genome.mutate();
+    validGenes(genome).should.be.true;
+  });
+});

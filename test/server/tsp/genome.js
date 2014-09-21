@@ -6,6 +6,21 @@ var Genome = require('../../../lib/controllers/genome'),
   
 var genome;
 
+//test if genes of passed in genome are valid
+//all elements should be numbers, and there shouldn't be any duplicates
+function validGenes(g) {
+  var test = g.genes.slice();
+  test.sort(function(a, b) {
+    return a - b;
+  });
+
+  for (var i = 0; i < test.length; i++) {
+    if (typeof test[i] !== 'number') return false;
+    if (test[i] !== i) return false;
+  };
+  return true;
+}
+
 describe('constructor', function() {
   beforeEach(function() {
     genome = new Genome(5);
@@ -17,14 +32,7 @@ describe('constructor', function() {
   });
 
   it('should have a gene array with numbers from 0 to num of cities - 1, all should be duplicate entries', function() {
-    genome.genes.sort(function(a, b) {
-      return a - b;
-    });
-
-    for (var i = 0; i < 5; i++) {
-      (typeof genome.genes[i]).should.equal('number');
-      genome.genes[i].should.equal(i);
-    };
+    validGenes(genome).should.be.true;
   });
 });
 
@@ -109,11 +117,29 @@ describe('swapPMXHelper function', function() {
     _.isEqual(genome2.genes, [3, 1, 0, 6, 2, 5, 4, 7]).should.be.true;   
   });
 
+  it('should work work for edge cases', function() {
+    genome.genes = [2, 3, 1, 4, 0, 7, 5, 6];
+    genome2.genes = [1, 2, 0, 3, 4, 5, 6, 7];
+
+    genome.swapPMXHelper(genome2, 6, 8);
+    validGenes(genome).should.be.true;
+    validGenes(genome2).should.be.true;
+
+    genome.genes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    genome2.genes = [0, 5, 4, 6, 9, 2, 1, 7, 8, 3];
+
+    genome.swapPMXHelper(genome2, 2, 6);
+    validGenes(genome).should.be.true;
+    validGenes(genome2).should.be.true;    
+  });
+
   it('test cases', function() {
     genome.genes = [2, 5, 0, 3, 6, 1, 4, 7]
     genome2.genes = [3, 4, 0, 7, 2, 5, 1, 6]
     genome.swapPMXHelper(genome2, 3, 6);
 
+    validGenes(genome).should.be.true;
+    validGenes(genome2).should.be.true; 
     _.isEqual(genome.genes, [6, 1, 0, 7, 2, 5, 4, 3]).should.be.true;
     _.isEqual(genome2.genes, [7, 4, 0, 3, 6, 1, 5, 2]).should.be.true;
   });
@@ -127,17 +153,24 @@ describe('swapPMX function', function() {
   }); 
 
   it('after swapping, each genome should not have any duplicate numbers', function() {
-    genome.genes.sort(function(a, b) {
-      return a - b;
-    });
-
-    genome2.genes.sort(function(a, b) {
-      return a - b;
-    });
-
-    for (var i = 0; i < 8; i++) {
-      genome.genes[i].should.equal(i);
-      genome2.genes[i].should.equal(i);
-    };    
+    genome.swapPMX(genome2);
+    validGenes(genome).should.be.true;
+    validGenes(genome2).should.be.true;
   })  
 });
+
+// describe('mutate function', function() {
+//   beforeEach(function() {
+//     genome = new Genome(10);
+//   });
+
+//   it('after mutation, genome\'s genes should be different from original', function() {
+//     var originalGenes = genome.genes.slice();
+//     genome.mutate();
+//     _.isEqual(genome.genes, originalGenes).should.be.false;
+//   });
+
+//   it('after mutation, the genome\'s genes should still be be valid', function() {
+
+//   });
+// });

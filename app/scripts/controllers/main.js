@@ -39,7 +39,22 @@ angular.module('tspApp')
           name: 'Thunder Bluff',
           xPos: 550,
           yPos: 400
-        }            
+        },
+        {
+          name: 'Gadgetzan‎',
+          xPos: 585,
+          yPos: 35
+        },
+        {
+          name: 'Stratholme',
+          xPos: 250,
+          yPos: 350
+        },
+        {
+          name: 'Black Temple',
+          xPos: 190,
+          yPos: 300
+        }                                    
       ]
     };
 
